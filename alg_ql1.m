@@ -235,7 +235,7 @@ while 1
                 xR=max(x-alphabar*(gforfirstorderstep+tau),0) - max(-x-alphabar*(-gforfirstorderstep+tau),0);
                 gR=Ax(xR)-b;
                 numA = numA+1;
-                if (nargout>=2),fullHistory=alg_sub_RecordMV(fullHistory, numA,gF,b,tau,xR,optimalityMeasure,1);end
+                if (nargout>=2),fullHistory=alg_sub_RecordMV(fullHistory, numA,g,b,tau,xR,optimalityMeasure,1);end
             end
             xPrevGlobal=x;
             gPrevGlobal=g;
