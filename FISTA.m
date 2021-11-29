@@ -7,7 +7,7 @@ for 3 cases:    Quadratic       + L1 regularization
 %}
 x = zeros(size(A,2),1);
 numMV = max_iter;
-func_eval = zeros(max_iter+1, 1);
+func_eval = zeros(1,max_iter+1);
 xHist = zeros(max_iter+1, length(x));
 zHist = zeros(max_iter+1, length(x));
 xHist(1,:) = x;
