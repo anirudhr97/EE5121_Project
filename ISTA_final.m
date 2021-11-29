@@ -1,4 +1,4 @@
-function [x,func_eval,numMV,xHist,zHist] = ISTA_final(A,b,tau,gamma,max_iter,type)
+function [x,func_eval,numMV,xHist] = ISTA_final(A,b,tau,gamma,max_iter,type)
 %{
 Function to implement the Iterative Shrinkage Thresholding Algorithm
 for 3 cases:    Quadratic       + L1 regularization
