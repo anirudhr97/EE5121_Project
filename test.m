@@ -31,3 +31,6 @@ figure;
 plot(func_eval);
 hold on;
 plot(fvals_iicg);
+
+% no of CG cycless
+plot(1:length(out2.CGmvcount),out2.CGmvcount)
