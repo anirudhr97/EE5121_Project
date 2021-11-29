@@ -1,11 +1,20 @@
-function [x,func_eval,numMV,xHist,zHist] = FISTA(A,b,tau,Gamma,max_iter,type)
+function [x,func_eval,numMV,xHist,zHist] = FISTA(A,b,tau,Gamma,max_iter,type,opts)
 %{
 Function to implement the Fast Iterative Shrinkage Thresholding Algorithm
 for 3 cases:    Quadratic       + L1 regularization
                 Least Squares   + L1 regularization
                 Quadratic       + L1 regularization     + L2 regularization
 %}
-x = zeros(size(A,2),1);
+arguments
+   A double
+   b double
+   tau double
+   Gamma double
+   max_iter {mustBeInteger}
+   type {mustBeMember(type,{'quad_l1','ls_l1','reg_quad_l1'})}
+   opts.x0 double = zeros(size(A,2),1)
+end
+x = opts.x0;
 numMV = max_iter;
 func_eval = zeros(1,max_iter+1);
 xHist = zeros(max_iter+1, length(x));
