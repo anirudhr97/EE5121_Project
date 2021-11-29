@@ -1,6 +1,6 @@
-
-function [x,func_eval] = ISTA_final(A,b,tau,gamma,max_iter,type)
-x = zeros(size(A,2),1); 
+function [x,func_eval,numMV] = ISTA_final(A,b,tau,gamma,max_iter,type)
+x = zeros(size(A,2),1);
+numMV = max_iter;
 L = norm(A,'fro')^2;
 if strcmp(type,'quad_l1')
     for i = 1 : max_iter

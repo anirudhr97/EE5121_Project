@@ -1,13 +1,13 @@
-function [x,func_eval,numMV] = FISTA(A,b,tau,Gamma,max_iter,type)
+function [x,func_eval,numMults] = FISTA(A,b,tau,Gamma,max_iter,type)
 x = zeros(size(A,2),1);
-numMV = max_iter;
 mu = 0;
+numMults = 0;
 z = x;
 L = norm(A,'fro')^2;
 if strcmp(type,'quad_l1')
     for i = 1 : max_iter
         mu = 0.5*(1 + sqrt(1 + 4*mu^2)); gamma = (1-mu)/(mu+1);
-        x = z;
+        zprev = z;
         z = soft_thresholding((x - (A*x -b)/L), tau/L);
         x = (1-gamma)*z + gamma*x;
         func_eval(i) = 0.5*x'*A*x - b'*x + tau*norm(x,1);
