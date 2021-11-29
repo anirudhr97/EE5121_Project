@@ -20,14 +20,14 @@ fvals_iicg = out2.fValues;
 tau = tau(1);
 disp('FISTA:');
 
-max_iter = 1500;
+max_iter = 766;
 [x,func_eval,numMV,~,~]  =  FISTA(A,b,tau,Gamma,max_iter,'quad_l1');
 disp(func_eval(end));
 
 % Fstar = min([fvals_iicg(end),func_eval(end)]);
 % tol = 
-
+close all
 figure;
 plot(func_eval);
-figure
+hold on;
 plot(fvals_iicg);
