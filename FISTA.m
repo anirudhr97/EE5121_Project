@@ -1,4 +1,10 @@
 function [x,func_eval,numMV] = FISTA(A,b,tau,Gamma,max_iter,type)
+%{
+Function to implement the Fast Iterative Shrinkage Thresholding Algorithm
+for 3 cases:    Quadratic       + L1 regularization
+                Least Squares   + L1 regularization
+                Quadratic       + L1 regularization     + L2 regularization
+%}
 x = zeros(size(A,2),1);
 numMV = max_iter;
 mu = 0;
