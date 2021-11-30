@@ -51,7 +51,7 @@ grid on;
 xlabel('Number of Matrix-Vector Products', 'Interpreter','latex', 'FontSize', 13)
 ylabel('Tolerance ($\frac{F(x^t)-F^*}{|F^*|}$)', 'Interpreter','latex', 'FontSize', 13)
 title('Plot of Tolerance vs Matrix-Vector Products for Random Matrix Problem')
-savefig('tolvsMV_rand.fig');
+savefig('Plots/tolvsMV_rand.fig');
 
 % Plotting with logarithmic x axis
 figure;
@@ -65,7 +65,7 @@ grid on;
 xlabel('Number of Matrix-Vector Products', 'Interpreter','latex', 'FontSize', 13)
 ylabel('Tolerance ($\frac{F(x^t)-F^*}{|F^*|}$)', 'Interpreter','latex', 'FontSize', 13)
 title('Plot of Tolerance vs Matrix-Vector Products for Random Matrix Problem')
-savefig('tolvsMV_rand_logy.fig');
+savefig('Plots/tolvsMV_rand_logy.fig');
 
 %% Commented out code
 % % Plotting the tolerance for each of ISTA, FISTA and iiCG
