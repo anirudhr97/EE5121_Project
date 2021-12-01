@@ -1,15 +1,14 @@
-%% Testing the working of iiCG, FISTA and ISTA on the Random Matrix Problem
+%% Testing the working of iiCG, FISTA and ISTA on the Spectra Problem
 % Closing all open figures
 close all;
 
-% Constructing B and y as random matrices from the normal distribution
-rng(3);            % For repeatability
+% Obtaining B and y values from the spectra dataset
 Gamma = 0.1;
-B = randn(100,200);
-y = 200*randn(100,1);
+B = spectra.NIR;        % 60 x 401
+y = spectra.octane;     % 60 x 1
 
 % Forming A and b corresponding to the quadratic L1 problem form of the 
-% Random Matrix Problem.
+% Spectra Problem.
 A = B'*B + 2*Gamma*eye(size(B,2));
 b = B'*y;
 tau = 1* ones(size(B,2),1);
@@ -23,12 +22,12 @@ fvals_iicg = out2.fValues;
 
 % Running FISTA
 tau = tau(1);
-max_iter = length(fvals_iicg)+100;
+max_iter = length(fvals_iicg)+15;
 [x_fista,func_eval_fista,~,~,~]  =  FISTA(A,b,tau,Gamma,max_iter,'quad_l1');
 
 % Running ISTA
 tau = tau(1);
-max_iter = length(fvals_iicg)+100;
+max_iter = length(fvals_iicg)+15;
 [x_ista,func_eval_ista,~,~]  =  ISTA_final(A,b,tau,Gamma,max_iter,'quad_l1');
 
 % Finding the lowest function value among the 3 methods.
@@ -50,9 +49,10 @@ legend('ISTA', 'FISTA', 'iiCG');
 grid on;
 xlabel('Number of Matrix-Vector Products', 'Interpreter','latex', 'FontSize', 13)
 ylabel('Tolerance ($\frac{F(x^t)-F^*}{|F^*|}$)', 'Interpreter','latex', 'FontSize', 13)
-title('Plot of Tolerance vs Matrix-Vector Products for Random Matrix Problem')
-% savefig('Plots/tolvsMV_rand.fig');
-print('Plots/tolvsMV_rand','-dpng');
+title('Plot of Tolerance vs Matrix-Vector Products for Spectra Problem')
+% savefig('Plots/tolvsMV.fig');
+print('Plots/tolvsMV','-dpng');
+
 
 % Plotting with logarithmic x axis
 figure;
@@ -65,9 +65,10 @@ legend('ISTA', 'FISTA', 'iiCG');
 grid on;
 xlabel('Number of Matrix-Vector Products', 'Interpreter','latex', 'FontSize', 13)
 ylabel('Tolerance ($\frac{F(x^t)-F^*}{|F^*|}$)', 'Interpreter','latex', 'FontSize', 13)
-title('Plot of Tolerance vs Matrix-Vector Products for Random Matrix Problem')
-% savefig('Plots/tolvsMV_rand_logy.fig');
-print('Plots/tolvsMV_log_rand','-dpng');
+title('Plot of Tolerance vs Matrix-Vector Products for Spectra Problem')
+% savefig('Plots/tolvsMV_logy.fig');
+print('Plots/tolvsMV_log','-dpng');
+
 
 % Plotting CG Move Count for iiCG
 figure;
@@ -75,21 +76,21 @@ plot(out2.CGmvcount, 'LineWidth', 1.5);
 grid on;
 xlabel('Iterations')
 ylabel('CG Move Count')
-title('Plot of Number of CG moves vs Iterations for Random Matrix Problem')
-% savefig('Plots/CGvsiter_rand.fig');
-print('Plots/CG_rand','-dpng');
+title('Plot of Number of CG moves vs Iterations for Spectra Problem')
+% savefig('Plots/CGvsiter.fig');
+print('Plots/CG','-dpng');
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Running FISTA
 tau = tau(1);
-max_iter = 1500;
+max_iter = 800;
 [x_fista,func_eval_fista,~,~,~]  =  FISTA(A,b,tau,Gamma,max_iter,'quad_l1');
 
 % Running ISTA
 tau = tau(1);
-max_iter = 1500;
+max_iter = 800;
 [x_ista,func_eval_ista,~,~]  =  ISTA_final(A,b,tau,Gamma,max_iter,'quad_l1');
 
 % Finding the lowest function value among the 3 methods.
@@ -111,9 +112,10 @@ legend('ISTA', 'FISTA', 'iiCG');
 grid on;
 xlabel('Number of Matrix-Vector Products', 'Interpreter','latex', 'FontSize', 13)
 ylabel('Tolerance ($\frac{F(x^t)-F^*}{|F^*|}$)', 'Interpreter','latex', 'FontSize', 13)
-title('Plot of Tolerance vs Matrix-Vector Products for Random Matrix Problem')
-% savefig('Plots/tolvsMV_rand.fig');
-print('Plots/tolvsMV_randlll','-dpng');
+title('Plot of Tolerance vs Matrix-Vector Products for Spectra Problem')
+% savefig('Plots/tolvsMV.fig');
+print('Plots/tolvsMVlll','-dpng');
+
 
 % Plotting with logarithmic x axis
 figure;
@@ -126,9 +128,9 @@ legend('ISTA', 'FISTA', 'iiCG');
 grid on;
 xlabel('Number of Matrix-Vector Products', 'Interpreter','latex', 'FontSize', 13)
 ylabel('Tolerance ($\frac{F(x^t)-F^*}{|F^*|}$)', 'Interpreter','latex', 'FontSize', 13)
-title('Plot of Tolerance vs Matrix-Vector Products for Random Matrix Problem')
-% savefig('Plots/tolvsMV_rand_logy.fig');
-print('Plots/tolvsMV_log_randlll','-dpng');
+title('Plot of Tolerance vs Matrix-Vector Products for Spectra Problem')
+% savefig('Plots/tolvsMV_logy.fig');
+print('Plots/tolvsMV_loglll','-dpng');
 
 
 %% Commented out code
@@ -143,8 +145,8 @@ print('Plots/tolvsMV_log_randlll','-dpng');
 % grid on;
 % xlabel('Number of Matrix-Vector Products')
 % ylabel('Tolerance')
-% title('Plot of Tolerance vs Matrix-Vector Products for Random Matrix Problem')
-% savefig('tolvsMV_rand.fig');
+% title('Plot of Tolerance vs Matrix-Vector Products for Spectra Problem')
+% savefig('tolvsMV.fig');
 % 
 % % Plotting with logarithmic x axis
 % figure;
@@ -157,44 +159,5 @@ print('Plots/tolvsMV_log_randlll','-dpng');
 % grid on;
 % xlabel('Number of Matrix-Vector Products')
 % ylabel('Tolerance')
-% title('Plot of Tolerance vs Matrix-Vector Products for Random Matrix Problem')
-% savefig('tolvsMV_rand_logx.fig');
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% % 
-% rng(33);
-% Gamma = 0.1;
-% B = randn(100,200); 
-% y = 200*randn(100,1);
-% 
-% A = B'*B + 2*Gamma*eye(size(B,2));
-% b = B'*y;
-% 
-% tau = 1* ones(size(B,2),1);
-% 
-% problem.Ax = @(x) A*x;
-% problem.tau = tau;
-% problem.b = b;
-% 
-% [out1,out2]  = alg_ql1(problem);
-% fvals_iicg = out2.fValues;
-% 
-% % FISTA
-% tau = tau(1);
-% disp('FISTA:');
-% 
-% max_iter = 766;
-% [x,func_eval,numMV,~,~]  =  FISTA(A,b,tau,Gamma,max_iter,'quad_l1');
-% disp(func_eval(end));
-% 
-% % Fstar = min([fvals_iicg(end),func_eval(end)]);
-% % tol = 
-% close all
-% figure;
-% plot(func_eval);
-% hold on;
-% plot(fvals_iicg);
-% 
-% % no of CG cycless
-% plot(1:length(out2.CGmvcount),out2.CGmvcount)
+% title('Plot of Tolerance vs Matrix-Vector Products for Spectra Problem')
+% savefig('tolvsMV_logx.fig');
