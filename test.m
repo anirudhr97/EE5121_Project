@@ -51,7 +51,8 @@ grid on;
 xlabel('Number of Matrix-Vector Products', 'Interpreter','latex', 'FontSize', 13)
 ylabel('Tolerance ($\frac{F(x^t)-F^*}{|F^*|}$)', 'Interpreter','latex', 'FontSize', 13)
 title('Plot of Tolerance vs Matrix-Vector Products for Random Matrix Problem')
-savefig('Plots/tolvsMV_rand.fig');
+% savefig('Plots/tolvsMV_rand.fig');
+print('Plots/tolvsMV_rand','-dpng');
 
 % Plotting with logarithmic x axis
 figure;
@@ -65,7 +66,8 @@ grid on;
 xlabel('Number of Matrix-Vector Products', 'Interpreter','latex', 'FontSize', 13)
 ylabel('Tolerance ($\frac{F(x^t)-F^*}{|F^*|}$)', 'Interpreter','latex', 'FontSize', 13)
 title('Plot of Tolerance vs Matrix-Vector Products for Random Matrix Problem')
-savefig('Plots/tolvsMV_rand_logy.fig');
+% savefig('Plots/tolvsMV_rand_logy.fig');
+print('Plots/tolvsMV_log_rand','-dpng');
 
 % Plotting CG Move Count for iiCG
 figure;
@@ -74,7 +76,9 @@ grid on;
 xlabel('Iterations')
 ylabel('CG Move Count')
 title('Plot of Number of CG moves vs Iterations for Random Matrix Problem')
-savefig('Plots/CGvsiter_rand.fig');
+% savefig('Plots/CGvsiter_rand.fig');
+print('Plots/CG_rand','-dpng');
+
 
 %% Commented out code
 % % Plotting the tolerance for each of ISTA, FISTA and iiCG

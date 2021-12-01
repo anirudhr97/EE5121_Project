@@ -50,7 +50,9 @@ grid on;
 xlabel('Number of Matrix-Vector Products', 'Interpreter','latex', 'FontSize', 13)
 ylabel('Tolerance ($\frac{F(x^t)-F^*}{|F^*|}$)', 'Interpreter','latex', 'FontSize', 13)
 title('Plot of Tolerance vs Matrix-Vector Products for Spectra Problem')
-savefig('Plots/tolvsMV.fig');
+% savefig('Plots/tolvsMV.fig');
+print('Plots/tolvsMV','-dpng');
+
 
 % Plotting with logarithmic x axis
 figure;
@@ -64,7 +66,9 @@ grid on;
 xlabel('Number of Matrix-Vector Products', 'Interpreter','latex', 'FontSize', 13)
 ylabel('Tolerance ($\frac{F(x^t)-F^*}{|F^*|}$)', 'Interpreter','latex', 'FontSize', 13)
 title('Plot of Tolerance vs Matrix-Vector Products for Spectra Problem')
-savefig('Plots/tolvsMV_logy.fig');
+% savefig('Plots/tolvsMV_logy.fig');
+print('Plots/tolvsMV_log','-dpng');
+
 
 % Plotting CG Move Count for iiCG
 figure;
@@ -73,7 +77,9 @@ grid on;
 xlabel('Iterations')
 ylabel('CG Move Count')
 title('Plot of Number of CG moves vs Iterations for Spectra Problem')
-savefig('Plots/CGvsiter.fig');
+% savefig('Plots/CGvsiter.fig');
+print('Plots/CG','-dpng');
+
 
 %% Commented out code
 % % Plotting the tolerance for each of ISTA, FISTA and iiCG
