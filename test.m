@@ -67,6 +67,15 @@ ylabel('Tolerance ($\frac{F(x^t)-F^*}{|F^*|}$)', 'Interpreter','latex', 'FontSiz
 title('Plot of Tolerance vs Matrix-Vector Products for Random Matrix Problem')
 savefig('Plots/tolvsMV_rand_logy.fig');
 
+% Plotting CG Move Count for iiCG
+figure;
+plot(out2.CGmvcount);
+grid on;
+xlabel('Iterations')
+ylabel('CG Move Count')
+title('Plot of Number of CG moves vs Iterations for Random Matrix Problem')
+savefig('Plots/CGvsiter_rand.fig');
+
 %% Commented out code
 % % Plotting the tolerance for each of ISTA, FISTA and iiCG
 % figure;
