@@ -41,11 +41,11 @@ tol_ista = (func_eval_ista - Fstar)/abs(Fstar);
 
 % Plotting the tolerance for each of ISTA, FISTA and iiCG
 figure;
-plot(tol_ista, 'r');
+plot(tol_ista, 'r', 'LineWidth', 1.5);
 hold on;
-plot(tol_fista, 'g');
+plot(tol_fista, 'k', 'LineWidth', 1.5);
 hold on;
-plot(tol_iiCG, 'b');
+plot(tol_iiCG, 'b', 'LineWidth', 1.5);
 legend('ISTA', 'FISTA', 'iiCG');
 grid on;
 xlabel('Number of Matrix-Vector Products', 'Interpreter','latex', 'FontSize', 13)
@@ -56,11 +56,11 @@ print('Plots/tolvsMV_rand','-dpng');
 
 % Plotting with logarithmic x axis
 figure;
-semilogy(tol_ista, 'r');
+semilogy(tol_ista, 'r', 'LineWidth', 1.5);
 hold on;
-semilogy(tol_fista, 'g');
+semilogy(tol_fista, 'k', 'LineWidth', 1.5);
 hold on;
-semilogy(tol_iiCG, 'b');
+semilogy(tol_iiCG, 'b', 'LineWidth', 1.5);
 legend('ISTA', 'FISTA', 'iiCG');
 grid on;
 xlabel('Number of Matrix-Vector Products', 'Interpreter','latex', 'FontSize', 13)
@@ -71,13 +71,64 @@ print('Plots/tolvsMV_log_rand','-dpng');
 
 % Plotting CG Move Count for iiCG
 figure;
-plot(out2.CGmvcount);
+plot(out2.CGmvcount, 'LineWidth', 1.5);
 grid on;
 xlabel('Iterations')
 ylabel('CG Move Count')
 title('Plot of Number of CG moves vs Iterations for Random Matrix Problem')
 % savefig('Plots/CGvsiter_rand.fig');
 print('Plots/CG_rand','-dpng');
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Running FISTA
+tau = tau(1);
+max_iter = 1500;
+[x_fista,func_eval_fista,~,~,~]  =  FISTA(A,b,tau,Gamma,max_iter,'quad_l1');
+
+% Running ISTA
+tau = tau(1);
+max_iter = 1500;
+[x_ista,func_eval_ista,~,~]  =  ISTA_final(A,b,tau,Gamma,max_iter,'quad_l1');
+
+% Finding the lowest function value among the 3 methods.
+Fstar = min([min(fvals_iicg), min(func_eval_ista), min(func_eval_fista)]);
+
+% Calculating tolerances
+tol_iiCG = (fvals_iicg - Fstar)/abs(Fstar);
+tol_fista = (func_eval_fista - Fstar)/abs(Fstar);
+tol_ista = (func_eval_ista - Fstar)/abs(Fstar);
+
+% Plotting the tolerance for each of ISTA, FISTA and iiCG
+figure;
+plot(tol_ista, 'r', 'LineWidth', 1.5);
+hold on;
+plot(tol_fista, 'k', 'LineWidth', 1.5);
+hold on;
+plot(tol_iiCG, 'b', 'LineWidth', 1.5);
+legend('ISTA', 'FISTA', 'iiCG');
+grid on;
+xlabel('Number of Matrix-Vector Products', 'Interpreter','latex', 'FontSize', 13)
+ylabel('Tolerance ($\frac{F(x^t)-F^*}{|F^*|}$)', 'Interpreter','latex', 'FontSize', 13)
+title('Plot of Tolerance vs Matrix-Vector Products for Random Matrix Problem')
+% savefig('Plots/tolvsMV_rand.fig');
+print('Plots/tolvsMV_randlll','-dpng');
+
+% Plotting with logarithmic x axis
+figure;
+semilogy(tol_ista, 'r', 'LineWidth', 1.5);
+hold on;
+semilogy(tol_fista, 'k', 'LineWidth', 1.5);
+hold on;
+semilogy(tol_iiCG, 'b', 'LineWidth', 1.5);
+legend('ISTA', 'FISTA', 'iiCG');
+grid on;
+xlabel('Number of Matrix-Vector Products', 'Interpreter','latex', 'FontSize', 13)
+ylabel('Tolerance ($\frac{F(x^t)-F^*}{|F^*|}$)', 'Interpreter','latex', 'FontSize', 13)
+title('Plot of Tolerance vs Matrix-Vector Products for Random Matrix Problem')
+% savefig('Plots/tolvsMV_rand_logy.fig');
+print('Plots/tolvsMV_log_randlll','-dpng');
 
 
 %% Commented out code
