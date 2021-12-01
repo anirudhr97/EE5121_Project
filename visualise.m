@@ -2,47 +2,102 @@
 clear;
 close all;
 
-% rng(3); % seed for reproducibility
+rng(5); % amazing CG advantage
+% rng(30); % absurd behaviour
+% rng(100);
 
-% 2D problem
-pdim = 2;
-M = rand(pdim,pdim);
-A  = M * M'; % sym pos def matrix
+% Define 2D problem
+pdim = 2; % dimension of problem
+
+% M = rand(pdim,pdim);
+% A  = M * M'; % sym pos def matrixplot(xHist_fista(:,1),xHist_fista(:,2),'og-.');
+% [E,D] = eig(A);
+% E = [1 1; 1 -1];
+% D = diag([1 3]); % make the quadratic part almost circular
+% A = E*D*E';
+% A = diag([1.5 0.8]);
+A = diag([1 1]);
 % b  = rand(pdim,1);
-b = [0.5; 0.5];
-tau = 0.5;
-
+b = [1; 0];
+tau = 0.5; % regularisation param for L1 regularisation
+% center = [0.5 0.5];
 % Conditioning Required?
+
+% Function handle to return matrix-vector product
 Ax = @(x) A*x;
 
-% Run algo
+% Starting position
+% x0 = [-1; 2];
+% x0 = [0.5;-0.5];
+% x0 = [0.5;0.5];
+% x0=[0;0];
+% x0 = [1;-0.5];
+
+%path2 trials
+% x0 = [1.5;1.5];
+% x0 = [-0.5;1.2];
+% x0 = [-0.25;1.2];
+% x0 = [1;-0.2];
+% x0 = [-0.25;-0.25];
+% x0 = [-0.1;-0.1];
+% x0 = [1.5;-0.1];
+% x0 = [-0.5; 0];
+x0 = [1;-0.5];
+%% iiCG
 problem.Ax = Ax;
 problem.b =b;
 problem.tau = tau*ones(pdim,1);
-opts.x_0 = [3;2];
+opts.x_0 = x0;
+opts.separate = true;
 % [out1] = alg_ql1(problem,opts);
 [out1,out2,xPrev] = alg_ql1(problem,opts); % get history of x
-
 disp('Algo Status');
 disp(out1.algStatus);
 
 
-% Plot contours of the function
+%% FISTA (with same initialisation)
+disp('FISTA:');
+[x_fista,func_eval_fista,numMV_fista,xHist_fista,zHist_fista] = FISTA(A,b,tau,NaN,out1.numA,'quad_l1','x0',opts.x_0);
+disp(func_eval_fista(end));
+
+%% ISTA
+% disp('ISTA:');
+[x_ista,func_eval_ista,numMV_ista,xHist_ista] = ISTA_final(A,b,tau,NaN,out1.numA,'quad_l1','x0',opts.x_0);
+disp(func_eval_ista(end));
+
+%% Plot contours of the function
+center = out1.x;
 
 % ql1 function F (for contour plotting)
-F_2D = @ (X) sum(X.*(A*X),1) - b'*X  + tau * vecnorm(X,1); % X is a d x N input (N sample points)
-N = 50; % discretization no
-viewbound = 1.5*max(max(abs(xPrev),[],'all'),1);
-x1 = linspace(-viewbound,viewbound,N);
-x2 = linspace(-viewbound,viewbound,N);
+F_2D = @ (X) 0.5*sum(X.*(A*X),1) - b'*X  + tau * vecnorm(X,1); % X is a d x N input (N sample points)
+N = 100; % discretization no
+% viewbound = 1.5*max([max(abs(xPrev),[],'all'),max(abs(xHist_fista),[],'all')]);
+% find bounds for plotting
+x1min = min([xPrev(1,:).';xHist_ista(:,1);xHist_fista(:,1)]);
+x1max = max([xPrev(1,:).';xHist_ista(:,1);xHist_fista(:,1)]);
+x2min = min([xPrev(2,:).';xHist_ista(:,2);xHist_fista(:,2)]);
+x2max = max([xPrev(2,:).';xHist_ista(:,2);xHist_fista(:,2)]);
+x1min = min(center(1)-1,x1min);x1max = max(center(1)+1,x1max);
+x2min = min(center(2)-1,x2min); x2max = max(center(2)+1,x2max);
+
+
+x1 = linspace(x1min-0.1,x1max+0.1,N);
+x2 = linspace(x2min-0.1,x2max+0.1,N);
 [X1,X2] = meshgrid(x1,x2);
 X_wrap = reshape(cat(3,X1,X2),N*N,2);
 Z = reshape(F_2D(X_wrap'),N,N);
-contourf(X1,X2,Z,10);
+contour(X1,X2,Z,10,'DisplayName','');
 grid('on');
 hold on;
-% Plot history of x, along with psi and phi
-plot(xPrev(1,:),xPrev(2,:),'xr-.');
-title('Path of solution');
-
-% 3D problem (will be difficult to show contours, but nice to show sparsity, and exploring a plane using CG)
+% Plot history of x
+h1 = plot(xPrev(1,:),xPrev(2,:),'or-','DisplayName','iiCG');
+% hold on;
+h2 = plot(xHist_fista(:,1),xHist_fista(:,2),'og-.','DisplayName','FISTA');
+% plot(xHist_ista(:,1),xHist_ista(:,2),'oc-.');
+hold off;
+xline(0,'DisplayName','');
+yline(0,'DisplayName','');
+legend([h1 h2],'Location','northwest');
+xlabel('x_1');
+ylabel('x_2');
+title('Solution Path');
