@@ -54,7 +54,7 @@ title('Plot of Tolerance vs Matrix-Vector Products for Spectra Problem')
 print('Plots/tolvsMV','-dpng');
 
 
-% Plotting with logarithmic x axis
+% Plotting with logarithmic y axis
 figure;
 semilogy(tol_ista, 'r', 'LineWidth', 1.5);
 hold on;
@@ -63,6 +63,7 @@ hold on;
 semilogy(tol_iiCG, 'b', 'LineWidth', 1.5);
 legend('ISTA', 'FISTA', 'iiCG');
 grid on;
+ylim([1e-12 inf]);
 xlabel('Number of Matrix-Vector Products', 'Interpreter','latex', 'FontSize', 13)
 ylabel('Tolerance ($\frac{F(x^t)-F^*}{|F^*|}$)', 'Interpreter','latex', 'FontSize', 13)
 title('Plot of Tolerance vs Matrix-Vector Products for Spectra Problem')
@@ -117,7 +118,7 @@ title('Plot of Tolerance vs Matrix-Vector Products for Spectra Problem')
 print('Plots/tolvsMVlll','-dpng');
 
 
-% Plotting with logarithmic x axis
+% Plotting with logarithmic y axis
 figure;
 semilogy(tol_ista, 'r', 'LineWidth', 1.5);
 hold on;
@@ -126,6 +127,7 @@ hold on;
 semilogy(tol_iiCG, 'b', 'LineWidth', 1.5);
 legend('ISTA', 'FISTA', 'iiCG');
 grid on;
+ylim([1e-12 inf]);
 xlabel('Number of Matrix-Vector Products', 'Interpreter','latex', 'FontSize', 13)
 ylabel('Tolerance ($\frac{F(x^t)-F^*}{|F^*|}$)', 'Interpreter','latex', 'FontSize', 13)
 title('Plot of Tolerance vs Matrix-Vector Products for Spectra Problem')

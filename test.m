@@ -24,12 +24,12 @@ fvals_iicg = out2.fValues;
 % Running FISTA
 tau = tau(1);
 max_iter = length(fvals_iicg)+100;
-[x_fista,func_eval_fista,~,~,~]  =  FISTA(A,b,tau,Gamma,max_iter,'quad_l1');
+[~,func_eval_fista,~,~,~]  =  FISTA(A,b,tau,Gamma,max_iter,'quad_l1');
 
 % Running ISTA
 tau = tau(1);
 max_iter = length(fvals_iicg)+100;
-[x_ista,func_eval_ista,~,~]  =  ISTA_final(A,b,tau,Gamma,max_iter,'quad_l1');
+[~,func_eval_ista,~,~]  =  ISTA_final(A,b,tau,Gamma,max_iter,'quad_l1');
 
 % Finding the lowest function value among the 3 methods.
 Fstar = min([min(fvals_iicg), min(func_eval_ista), min(func_eval_fista)]);
@@ -54,7 +54,7 @@ title('Plot of Tolerance vs Matrix-Vector Products for Random Matrix Problem')
 % savefig('Plots/tolvsMV_rand.fig');
 print('Plots/tolvsMV_rand','-dpng');
 
-% Plotting with logarithmic x axis
+% Plotting with logarithmic y axis
 figure;
 semilogy(tol_ista, 'r', 'LineWidth', 1.5);
 hold on;
@@ -63,15 +63,24 @@ hold on;
 semilogy(tol_iiCG, 'b', 'LineWidth', 1.5);
 legend('ISTA', 'FISTA', 'iiCG');
 grid on;
+ylim([1e-12 inf]);
 xlabel('Number of Matrix-Vector Products', 'Interpreter','latex', 'FontSize', 13)
 ylabel('Tolerance ($\frac{F(x^t)-F^*}{|F^*|}$)', 'Interpreter','latex', 'FontSize', 13)
 title('Plot of Tolerance vs Matrix-Vector Products for Random Matrix Problem')
 % savefig('Plots/tolvsMV_rand_logy.fig');
 print('Plots/tolvsMV_log_rand','-dpng');
 
+p = length(out2.CGmvcount);
+a = sum(reshape(out2.CGmvcount,4,p/4)); % in case mod(p,n)=0
+labels = [];
+for i=1:67
+    labels = [labels strcat(string(4*i-3), '-', string(4*i))];
+end
+
 % Plotting CG Move Count for iiCG
 figure;
-plot(out2.CGmvcount, 'LineWidth', 1.5);
+bar(a, 'LineWidth', 1.5);
+set(gca, 'XTick', 1:67, 'XTickLabel',labels);
 grid on;
 xlabel('Iterations')
 ylabel('CG Move Count')
@@ -115,7 +124,7 @@ title('Plot of Tolerance vs Matrix-Vector Products for Random Matrix Problem')
 % savefig('Plots/tolvsMV_rand.fig');
 print('Plots/tolvsMV_randlll','-dpng');
 
-% Plotting with logarithmic x axis
+% Plotting with logarithmic y axis
 figure;
 semilogy(tol_ista, 'r', 'LineWidth', 1.5);
 hold on;
@@ -124,6 +133,7 @@ hold on;
 semilogy(tol_iiCG, 'b', 'LineWidth', 1.5);
 legend('ISTA', 'FISTA', 'iiCG');
 grid on;
+ylim([1e-12 inf]);
 xlabel('Number of Matrix-Vector Products', 'Interpreter','latex', 'FontSize', 13)
 ylabel('Tolerance ($\frac{F(x^t)-F^*}{|F^*|}$)', 'Interpreter','latex', 'FontSize', 13)
 title('Plot of Tolerance vs Matrix-Vector Products for Random Matrix Problem')
