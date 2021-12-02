@@ -63,7 +63,7 @@ grid on;
 xlabel('Number of Matrix-Vector Products', 'Interpreter','latex', 'FontSize', 13)
 ylabel('Tolerance ($\frac{F(x^t)-F^*}{|F^*|}$)', 'Interpreter','latex', 'FontSize', 13)
 title('Plot of Tolerance vs Matrix-Vector Products for Spectra Problem')
-print('Plots/tolvsMV','-dpng');
+print('plots/tolvsMV','-dpng');
 
 
 % Plotting with logarithmic y axis
@@ -79,7 +79,7 @@ ylim([1e-12 inf]);
 xlabel('Number of Matrix-Vector Products', 'Interpreter','latex', 'FontSize', 13)
 ylabel('Tolerance ($\frac{F(x^t)-F^*}{|F^*|}$)', 'Interpreter','latex', 'FontSize', 13)
 title('Plot of Tolerance vs Matrix-Vector Products for Spectra Problem')
-print('Plots/tolvsMV_log','-dpng');
+print('plots/tolvsMV_log','-dpng');
 
 
 % Plotting CG Move Count for iiCG
@@ -89,7 +89,7 @@ grid on;
 xlabel('Iterations')
 ylabel('CG Move Count')
 title('Plot of Number of CG moves vs Iterations for Spectra Problem')
-print('Plots/CG','-dpng');
+print('plots/CG','-dpng');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -125,7 +125,7 @@ grid on;
 xlabel('Number of Matrix-Vector Products', 'Interpreter','latex', 'FontSize', 13)
 ylabel('Tolerance ($\frac{F(x^t)-F^*}{|F^*|}$)', 'Interpreter','latex', 'FontSize', 13)
 title('Plot of Tolerance vs Matrix-Vector Products for Spectra Problem')
-print('Plots/tolvsMVlll','-dpng');
+print('plots/tolvsMVlong','-dpng');
 
 
 % Plotting with logarithmic y axis
@@ -141,4 +141,4 @@ ylim([1e-12 inf]);
 xlabel('Number of Matrix-Vector Products', 'Interpreter','latex', 'FontSize', 13)
 ylabel('Tolerance ($\frac{F(x^t)-F^*}{|F^*|}$)', 'Interpreter','latex', 'FontSize', 13)
 title('Plot of Tolerance vs Matrix-Vector Products for Spectra Problem')
-print('Plots/tolvsMV_loglll','-dpng');
+print('plots/tolvsMV_loglong','-dpng');

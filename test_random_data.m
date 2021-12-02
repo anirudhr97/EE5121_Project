@@ -51,7 +51,7 @@ grid on;
 xlabel('Number of Matrix-Vector Products', 'Interpreter','latex', 'FontSize', 13)
 ylabel('Tolerance ($\frac{F(x^t)-F^*}{|F^*|}$)', 'Interpreter','latex', 'FontSize', 13)
 title('Plot of Tolerance vs Matrix-Vector Products for Random Matrix Problem')
-print('Plots/tolvsMV_rand','-dpng');
+print('plots/tolvsMV_rand','-dpng');
 
 % Plotting with logarithmic y axis
 figure;
@@ -66,7 +66,7 @@ ylim([1e-12 inf]);
 xlabel('Number of Matrix-Vector Products', 'Interpreter','latex', 'FontSize', 13)
 ylabel('Tolerance ($\frac{F(x^t)-F^*}{|F^*|}$)', 'Interpreter','latex', 'FontSize', 13)
 title('Plot of Tolerance vs Matrix-Vector Products for Random Matrix Problem')
-print('Plots/tolvsMV_log_rand','-dpng');
+print('plots/tolvsMV_log_rand','-dpng');
 
 % Problem specific calculations to plot the no. of CG moves as a bar graph
 % First few values are omitted to give a better number to plot a bar graph
@@ -74,9 +74,9 @@ print('Plots/tolvsMV_log_rand','-dpng');
 arrr = out2.CGmvcount(5:end);
 p = length(arrr);
 a = sum(reshape(arrr,12,p/12));
-labels = zeros(1,22);
+labels = [];
 for i=1:22
-    labels(i) = strcat(string(12*i-11), '-', string(12*i));
+    labels = [labels strcat(string(12*i-11), '-', string(12*i))];
 end
 
 % Plotting CG Move Count for iiCG
@@ -87,7 +87,7 @@ grid on;
 xlabel('Iterations')
 ylabel('CG Move Count')
 title('Plot of Number of CG moves vs Iterations for Random Matrix Problem')
-print('Plots/CG_rand','-dpng');
+print('plots/CG_rand','-dpng');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -123,7 +123,7 @@ grid on;
 xlabel('Number of Matrix-Vector Products', 'Interpreter','latex', 'FontSize', 13)
 ylabel('Tolerance ($\frac{F(x^t)-F^*}{|F^*|}$)', 'Interpreter','latex', 'FontSize', 13)
 title('Plot of Tolerance vs Matrix-Vector Products for Random Matrix Problem')
-print('Plots/tolvsMV_randlll','-dpng');
+print('plots/tolvsMV_randlong','-dpng');
 
 % Plotting with logarithmic y axis
 figure;
@@ -138,4 +138,4 @@ ylim([1e-12 inf]);
 xlabel('Number of Matrix-Vector Products', 'Interpreter','latex', 'FontSize', 13)
 ylabel('Tolerance ($\frac{F(x^t)-F^*}{|F^*|}$)', 'Interpreter','latex', 'FontSize', 13)
 title('Plot of Tolerance vs Matrix-Vector Products for Random Matrix Problem')
-print('Plots/tolvsMV_log_randlll','-dpng');
+print('plots/tolvsMV_log_randlong','-dpng');
