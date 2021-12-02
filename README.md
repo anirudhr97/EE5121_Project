@@ -19,9 +19,11 @@ The spectra dataset can be loaded using [spectra.mat](./spectra.mat).
 
 -- If you do not have the spectra dataset on your MATLAB version, use the 'spectra.mat' file given in this repository. Use the following command 
 to import the dataset into your MATLAB workspace:
+
 `spectra = importdata('spectra.mat')`
 
 -- Use the following command to get an idea on what the dataset is about:
+
 `spectra.Description`
 
 Once this dataset has been imported into your MATLAB workspace, the plots shown in the slides can be obtained by running [test_spectra_data.m](./test_spectra_data.m).
