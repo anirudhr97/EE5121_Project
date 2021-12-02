@@ -29,7 +29,7 @@ max_iter = length(fvals_iicg)+100;
 % Running ISTA
 tau = tau(1);
 max_iter = length(fvals_iicg)+100;
-[~,func_eval_ista,~,~]  =  ISTA_final(A,b,tau,Gamma,max_iter,'quad_l1');
+[~,func_eval_ista,~,~]  =  ISTA(A,b,tau,Gamma,max_iter,'quad_l1');
 
 % Finding the lowest function value among the 3 methods.
 Fstar = min([min(fvals_iicg), min(func_eval_ista), min(func_eval_fista)]);
@@ -101,7 +101,7 @@ max_iter = 1500;
 % Running ISTA
 tau = tau(1);
 max_iter = 1500;
-[x_ista,func_eval_ista,~,~]  =  ISTA_final(A,b,tau,Gamma,max_iter,'quad_l1');
+[x_ista,func_eval_ista,~,~]  =  ISTA(A,b,tau,Gamma,max_iter,'quad_l1');
 
 % Finding the lowest function value among the 3 methods.
 Fstar = min([min(fvals_iicg), min(func_eval_ista), min(func_eval_fista)]);

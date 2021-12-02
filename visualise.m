@@ -1,48 +1,31 @@
-% Create 2D/3D visualisations of steps in the algorithm, and in FISTA
+% Create 2D visualisations of steps in the algorithm, and in FISTA
 clear;
 close all;
 
-rng(5); % amazing CG advantage
-% rng(30); % absurd behaviour
-% rng(100);
+rng(5);
 
 % Define 2D problem
 pdim = 2; % dimension of problem
 
+% Random problem
 % M = rand(pdim,pdim);
 % A  = M * M'; % sym pos def matrixplot(xHist_fista(:,1),xHist_fista(:,2),'og-.');
 % [E,D] = eig(A);
 % E = [1 1; 1 -1];
 % D = diag([1 3]); % make the quadratic part almost circular
 % A = E*D*E';
-% A = diag([1.5 0.8]);
-A = diag([1 1]);
-% b  = rand(pdim,1);
+% Handcrafted choice
+A = diag([1.5 0.8]);
 b = [1; 0];
 tau = 0.5; % regularisation param for L1 regularisation
-% center = [0.5 0.5];
-% Conditioning Required?
 
 % Function handle to return matrix-vector product
 Ax = @(x) A*x;
 
 % Starting position
-% x0 = [-1; 2];
-% x0 = [0.5;-0.5];
-% x0 = [0.5;0.5];
 % x0=[0;0];
-% x0 = [1;-0.5];
-
-%path2 trials
-% x0 = [1.5;1.5];
-% x0 = [-0.5;1.2];
-% x0 = [-0.25;1.2];
-% x0 = [1;-0.2];
-% x0 = [-0.25;-0.25];
-% x0 = [-0.1;-0.1];
-% x0 = [1.5;-0.1];
-% x0 = [-0.5; 0];
 x0 = [1;-0.5];
+
 %% iiCG
 problem.Ax = Ax;
 problem.b =b;
@@ -54,7 +37,7 @@ opts.separate = true;
 disp('Algo Status');
 disp(out1.algStatus);
 
-
+% These are run for the same number of matrix-vector products
 %% FISTA (with same initialisation)
 disp('FISTA:');
 [x_fista,func_eval_fista,numMV_fista,xHist_fista,zHist_fista] = FISTA(A,b,tau,NaN,out1.numA,'quad_l1','x0',opts.x_0);
@@ -62,16 +45,15 @@ disp(func_eval_fista(end));
 
 %% ISTA
 % disp('ISTA:');
-[x_ista,func_eval_ista,numMV_ista,xHist_ista] = ISTA_final(A,b,tau,NaN,out1.numA,'quad_l1','x0',opts.x_0);
+[x_ista,func_eval_ista,numMV_ista,xHist_ista] = ISTA(A,b,tau,NaN,out1.numA,'quad_l1','x0',opts.x_0);
 disp(func_eval_ista(end));
 
 %% Plot contours of the function
-center = out1.x;
+center = out1.x; % make sure optimal in the center of the plot
 
 % ql1 function F (for contour plotting)
 F_2D = @ (X) 0.5*sum(X.*(A*X),1) - b'*X  + tau * vecnorm(X,1); % X is a d x N input (N sample points)
 N = 100; % discretization no
-% viewbound = 1.5*max([max(abs(xPrev),[],'all'),max(abs(xHist_fista),[],'all')]);
 % find bounds for plotting
 x1min = min([xPrev(1,:).';xHist_ista(:,1);xHist_fista(:,1)]);
 x1max = max([xPrev(1,:).';xHist_ista(:,1);xHist_fista(:,1)]);
@@ -89,9 +71,9 @@ Z = reshape(F_2D(X_wrap'),N,N);
 contour(X1,X2,Z,10,'DisplayName','');
 grid('on');
 hold on;
-% Plot history of x
+% Plot history of x fpr iiCG
 h1 = plot(xPrev(1,:),xPrev(2,:),'or-','DisplayName','iiCG');
-% hold on;
+% for FISTA
 h2 = plot(xHist_fista(:,1),xHist_fista(:,2),'og-.','DisplayName','FISTA');
 % plot(xHist_ista(:,1),xHist_ista(:,2),'oc-.');
 hold off;

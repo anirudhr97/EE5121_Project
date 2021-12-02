@@ -1,9 +1,13 @@
-function [x,func_eval,numMV,xHist] = ISTA_final(A,b,tau,gamma,max_iter,type,opts)
+function [x,func_eval,numMV,xHist] = ISTA(A,b,tau,gamma,max_iter,type,opts)
 %{
 Function to implement the Iterative Shrinkage Thresholding Algorithm
-for 3 cases:    Quadratic       + L1 regularization
-                Least Squares   + L1 regularization
-                Quadratic       + L1 regularization     + L2 regularization
+for 3 cases of objective function:
+                1)Quadratic       + L1 regularization
+                2)Least Squares   + L1 regularization
+                3)Quadratic       + L1 regularization     + L2 regularization
+Though these can be reduced to the same form, all three forms are allowed
+for convenience
+'Quadratic' here refers to the form x^TAx - bx
 %}
 arguments
    A double

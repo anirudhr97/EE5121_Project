@@ -1,15 +1,19 @@
 function [x,func_eval,numMV,xHist,zHist] = FISTA(A,b,tau,Gamma,max_iter,type,opts)
 %{
 Function to implement the Fast Iterative Shrinkage Thresholding Algorithm
-for 3 cases:    Quadratic       + L1 regularization
-                Least Squares   + L1 regularization
-                Quadratic       + L1 regularization     + L2 regularization
+for 3 cases of objective function:
+                1)Quadratic       + L1 regularization
+                2)Least Squares   + L1 regularization
+                3)Quadratic       + L1 regularization     + L2 regularization
+Though these can be reduced to the same form, all three forms are allowed
+for convenience
+'Quadratic' here refers to the form x^TAx - bx
 %}
 arguments
    A double
    b double
-   tau double
-   Gamma double
+   tau double % coefficient for l1 regulariser
+   Gamma double % applies only to (3), coefficient for L2 regulariser
    max_iter {mustBeInteger}
    type {mustBeMember(type,{'quad_l1','ls_l1','reg_quad_l1'})}
    opts.x0 double = zeros(size(A,2),1)
@@ -21,7 +25,7 @@ xHist = zeros(max_iter+1, length(x));
 zHist = zeros(max_iter+1, length(x));
 xHist(1,:) = x;
 zHist(1,:) = x;
-mu = 0;
+mu = 0; % initial momentum acceleration parameter
 z = x;
 L = norm(A,'fro')^2;
 if strcmp(type,'quad_l1')
