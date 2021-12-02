@@ -2,7 +2,7 @@
 
 Project for EE5121 Optimisation (July-Nov 2021 Semester) based on :
 Solntsev, Stefan, Jorge Nocedal, and Richard H. Byrd. "An algorithm for quadratic ℓ1-regularized optimization with a flexible active-set strategy." Optimization Methods and Software 30, no. 6 (2015): 1213-1237.
-[doi link]https://doi.org/10.1080/10556788.2015.1028062)
+[doi link](https://doi.org/10.1080/10556788.2015.1028062)
 
 The original implementation of the algorithm is available [here](https://github.com/stefanks/Ql1-Algorithm), which we built over for our simulations. [alg_ql1.m](./alg_ql1.m) is the main algorithm, for which [Auxiliary](./Auxiliary) contains helper functions.
 
