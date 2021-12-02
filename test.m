@@ -70,17 +70,18 @@ title('Plot of Tolerance vs Matrix-Vector Products for Random Matrix Problem')
 % savefig('Plots/tolvsMV_rand_logy.fig');
 print('Plots/tolvsMV_log_rand','-dpng');
 
-p = length(out2.CGmvcount);
-a = sum(reshape(out2.CGmvcount,4,p/4)); % in case mod(p,n)=0
+arrr = out2.CGmvcount(5:end);
+p = length(arrr);
+a = sum(reshape(arrr,12,p/12)); % in case mod(p,n)=0
 labels = [];
-for i=1:67
-    labels = [labels strcat(string(4*i-3), '-', string(4*i))];
+for i=1:22
+    labels = [labels strcat(string(12*i-11), '-', string(12*i))];
 end
 
 % Plotting CG Move Count for iiCG
 figure;
 bar(a, 'LineWidth', 1.5);
-set(gca, 'XTick', 1:67, 'XTickLabel',labels);
+set(gca, 'XTick', 1:22, 'XTickLabel',labels);
 grid on;
 xlabel('Iterations')
 ylabel('CG Move Count')
