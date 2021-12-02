@@ -1,4 +1,4 @@
-# Interleaved ISTA-iiCG
+# Interleaved ISTA-CG (iiCG)
 
 Project for EE5121 Optimisation (July-Nov 2021 Semester) based on :
 Solntsev, Stefan, Jorge Nocedal, and Richard H. Byrd. "An algorithm for quadratic ℓ1-regularized optimization with a flexible active-set strategy." Optimization Methods and Software 30, no. 6 (2015): 1213-1237.
